@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import StudentList from './StudentList.js' 
 import SingleStudent from './SingleStudent.js' 
+import NewStudent from './NewStudent'
 
 export default class Main extends Component {
     constructor(props){
@@ -13,12 +14,19 @@ export default class Main extends Component {
         }
 
         this.selectStudent = this.selectStudent.bind(this)
+        this.addStudent = this.addStudent.bind(this)
+
     }
 
     componentDidMount(){
         this.getStudents()
     }
-
+    addStudent(data){   
+        console.log("made it to addStudent", data)
+        this.setState({
+            students: [...students, data]
+        })
+    }
     getStudents(){
         console.log("fetching")
         axios.get('/student')
@@ -48,6 +56,7 @@ export default class Main extends Component {
                 {
                     this.state.selectedStudent.id ? <SingleStudent student={this.state.selectedStudent} /> : null
                 }
+                <NewStudent addStudent={this.addStudent}></NewStudent>
                
             </div>
         )

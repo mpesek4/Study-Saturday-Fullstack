@@ -3,7 +3,7 @@ const Student = require('../db/models/students');
 const Test = require('../db/models/tests');
 
 router.get('/:studentId', function(req, res, next) {
-  Student.findById(req.params.studentId)
+  Student.findById(req.params.studentId, {include: { all:true}})
     .then(student => {
       if (!student) return res.sendStatus(404);
       res.json(student);
